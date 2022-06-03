@@ -14,6 +14,12 @@ const MainNavigation = () => {
             <li>
               <Link href='/upload-oas'> Test Your API </Link>
             </li>
+            <li>
+              <Link href='/testing-results'> Results </Link>
+            </li>
+            <li>
+              <Link href='/testing-statistics'> Statistics </Link>
+            </li>
           </ul>
         </nav>
       </header>
