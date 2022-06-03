@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import { TestingResultsContext } from '../context/TestingResultsContext';
+import LoadingBoxSpinner from '../components/ui/loading-spinner/LoadingBoxSpinner';
 
 const TestApiPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +24,12 @@ const TestApiPage = () => {
     // redirect to results => router.replace
   };
 
-  return <h1> Test Your API </h1>;
+  return (
+    <>
+      {isLoading && <LoadingBoxSpinner />}
+      {!isLoading && <h1> Test Your API </h1>}
+    </>
+  );
 };
 
 export default TestApiPage;
