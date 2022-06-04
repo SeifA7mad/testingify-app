@@ -1,0 +1,1 @@
+{"version":"0.1.0","name":"testingify-app","dependencies":{"@fortawesome/fontawesome-svg-core":{"version":"6.1.1"},"@fortawesome/free-solid-svg-icons":{"version":"6.1.1"},"@fortawesome/react-fontawesome":{"version":"0.1.18"},"chart.js":{"version":"2.9.3"},"next":{"version":"12.1.6"},"react-dom":{"version":"18.1.0"},"react":{"version":"18.1.0"}}}
