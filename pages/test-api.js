@@ -13,6 +13,10 @@ const TestApiPage = () => {
 
   const router = useRouter();
 
+  const setErrorHandler = (errorText) => {
+    setError(errorText);
+  };
+
   const postHttpFileHandler = async (formData) => {
     // setLoading = true
     setIsLoading(true);
@@ -21,14 +25,12 @@ const TestApiPage = () => {
     try {
       const response = await fetch('http://localhost:3000/testapi', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Request Failed...');
+        const errorData = await response.json();
+        throw new Error(errorData.error);
       }
 
       const data = await response.json();
@@ -41,7 +43,6 @@ const TestApiPage = () => {
       setError(err.message || 'Something went wrong..');
     }
 
-
     // setLoading false
     setIsLoading(false);
     // redirect to results => router.replace
@@ -49,8 +50,19 @@ const TestApiPage = () => {
 
   return (
     <>
-      {isLoading && <LoadingBoxSpinner />}
-      {!isLoading && <UploadForm sendFileHandler={postHttpFileHandler} />}
+      {error && (
+        <>
+          <h1> {error} </h1>
+          <button onClick={() => setErrorHandler(null)}> Try Again!! </button>
+        </>
+      )}
+      {isLoading && !error && <LoadingBoxSpinner />}
+      {!isLoading && !error && (
+        <UploadForm
+          sendFileHandler={postHttpFileHandler}
+          setError={setErrorHandler}
+        />
+      )}
     </>
   );
 };

@@ -1,0 +1,29 @@
+.AuthInput {
+  padding: 1rem;
+  border-radius: 1rem;
+  margin: 1.5rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.AuthInput label {
+    font-style: italic;
+    color: #bdc3c7;
+}
+
+.field {
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.field input {
+  background: 0;
+  border: 0;
+  outline: none;
+  width: 80vw;
+  max-width: 400px;
+  font-size: 1.3em;
+  padding-bottom: 5px;
+  border-bottom: 3px solid #bdc3c7;
+}

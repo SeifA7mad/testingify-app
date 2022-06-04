@@ -4,9 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
-.fileUpload {
+.fileUpload,
+.plusBtn {
   height: 200px;
   width: 200px;
   border-radius: 100px;
@@ -16,7 +18,7 @@
   justify-content: center;
   align-items: center;
 
-  border: 4px solid #ffffff;
+  border: 10px solid #ffffff;
   overflow: hidden;
   background-image: linear-gradient(to bottom, #2590eb 50%, #ffffff 50%);
   background-size: 100% 200%;
@@ -38,4 +40,21 @@
 .fileUpload:hover {
   background-position: 0 -100%;
   color: #2590eb;
+}
+
+.plusBtn {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  background-image: linear-gradient(to bottom, #062138 50%, #ffffff 50%);
+}
+
+.plusBtn:hover {
+  background-position: 0 -100%;
+  color: #062138;
+}
+
+.authInputsBtns {
+  display: flex;
+  flex-direction: row;
 }
