@@ -27,6 +27,10 @@
   font-size: 100px;
 }
 
+.fileUploaded {
+  background-image: linear-gradient(to bottom, #25eb6e 50%, #ffffff 50%);
+}
+
 .fileUploadInput {
   height: 200px;
   width: 200px;
@@ -40,6 +44,10 @@
 .fileUpload:hover {
   background-position: 0 -100%;
   color: #2590eb;
+}
+
+.fileUploaded:hover {
+  color: #25eb6e;
 }
 
 .plusBtn {

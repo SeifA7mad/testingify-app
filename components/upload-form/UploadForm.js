@@ -8,13 +8,21 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import AuthInput from './AuthInput';
+import Button from '../ui/Button';
+
 import classes from './UploadForm.module.css';
 
 const authKeys = [];
 
 const UploadForm = (props) => {
   const [authInputs, setAuthInputs] = useState([]);
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
+
   const fileUploadInputRef = useRef();
+
+  const onChangeFileUploadHandler = () => {
+    setIsFileUploaded(true);
+  };
 
   const setKeyValueHandler = (value, id) => {
     authKeys[id].keyValue = value;
@@ -72,17 +80,22 @@ const UploadForm = (props) => {
       }
       formData.append(key.keyName, key.keyValue);
     }
-    
+
     props.sendFileHandler(formData);
   };
 
   return (
     <form className={classes.wrapper}>
-      <div className={classes.fileUpload}>
+      <div
+        className={`${classes.fileUpload} ${
+          isFileUploaded && classes.fileUploaded
+        }`}
+      >
         <input
           className={classes.fileUploadInput}
           type='file'
           accept='application/JSON'
+          onChange={onChangeFileUploadHandler}
           ref={fileUploadInputRef}
         />
         <FontAwesomeIcon icon={faArrowUp} />
@@ -100,7 +113,7 @@ const UploadForm = (props) => {
         />
       </div>
       <div className={classes.authInputs}>{authInputs}</div>
-      <button onClick={uploadFileHandler}> Test API </button>
+      <Button onClick={uploadFileHandler}> Test API </Button>
     </form>
   );
 };

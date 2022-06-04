@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { TestingResultsContext } from '../context/TestingResultsContext';
 import LoadingBoxSpinner from '../components/ui/loading-spinner/LoadingBoxSpinner';
+import Button from '../components/ui/Button';
 import UploadForm from '../components/upload-form/UploadForm';
 
 const TestApiPage = () => {
@@ -45,7 +46,7 @@ const TestApiPage = () => {
     // setLoading false
     setIsLoading(false);
     // redirect to results => router.replace
-    router.push('/testing-results');
+    if (!!error) router.push('/testing-results');
   };
 
   return (
@@ -53,10 +54,18 @@ const TestApiPage = () => {
       {error && (
         <>
           <h1> {error} </h1>
-          <button onClick={() => setErrorHandler(null)}> Try Again!! </button>
+          <Button onClick={() => setErrorHandler(null)}> Try Again!! </Button>
         </>
       )}
-      {isLoading && !error && <LoadingBoxSpinner />}
+      {isLoading && !error && (
+        <>
+          <LoadingBoxSpinner />
+          <h4 style={{ textAlign: 'center' }}>
+            {' '}
+            Please Patiently wait it depends on how large your API is...{' '}
+          </h4>
+        </>
+      )}
       {!isLoading && !error && (
         <UploadForm
           sendFileHandler={postHttpFileHandler}
