@@ -3,7 +3,7 @@ import { TestingResultsContext } from '../../context/TestingResultsContext';
 
 import Chart from 'chart.js/auto';
 
-const FitnessChart = () => {
+const FitnessChart = ({chartValues}) => {
   const canvasEl = useRef(null);
 
   const testingResultsCtx = useContext(TestingResultsContext);
@@ -29,10 +29,10 @@ const FitnessChart = () => {
     gradient.addColorStop(0.65, colors.purple.quarter);
     gradient.addColorStop(1, colors.purple.zero);
 
-    const weight = testingResultsCtx.resultsData.fitnessValues;
+    const weight = chartValues;
 
     const labels = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < chartValues.length; i++) {
       labels.push(i);
     }
 

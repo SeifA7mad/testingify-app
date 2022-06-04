@@ -6,7 +6,11 @@ const testingStatisticsPage = () => {
   const testingResultsCtx = useContext(TestingResultsContext);
   const isResultsEmtpy = !!testingResultsCtx.resultsData;
 
-  return isResultsEmtpy && <FitnessChart />;
+  return (
+    isResultsEmtpy && (
+      <FitnessChart chartValues={testingResultsCtx.resultsData.fitnessValues} />
+    )
+  );
 };
 
 export default testingStatisticsPage;
