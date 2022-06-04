@@ -1,12 +1,9 @@
 import { useRef, useEffect, useContext } from 'react';
-import { TestingResultsContext } from '../../context/TestingResultsContext';
 
 import Chart from 'chart.js/auto';
 
 const FitnessChart = ({chartValues}) => {
   const canvasEl = useRef(null);
-
-  const testingResultsCtx = useContext(TestingResultsContext);
 
   const colors = {
     purple: {
