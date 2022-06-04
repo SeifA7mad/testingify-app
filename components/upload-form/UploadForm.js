@@ -53,16 +53,26 @@ const UploadForm = (props) => {
 
   const uploadFileHandler = (event) => {
     event.preventDefault();
-
+    const workingAuthKeys = [...authKeys];
+    authKeys = [];
     const files = fileUploadInputRef.current.files;
 
     if (!files[0]) {
       props.setError('Must Select a JSON file');
       return;
     }
+
     const formData = new FormData();
     formData.append('oasFile', files[0]);
 
+    for (const key of workingAuthKeys) {
+      if (key.keyName === '' || key.keyValue === '') {
+        props.setError("Mustn't leave the form fields Empty!!");
+        return;
+      }
+      formData.append(key.keyName, key.keyValue);
+    }
+    
     props.sendFileHandler(formData);
   };
 

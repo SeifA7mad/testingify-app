@@ -36,7 +36,6 @@ const TestApiPage = () => {
       const data = await response.json();
 
       // set response data to context => setResultsData(response.data)
-      console.log(data);
       testingResultsCtx.setResultsData(data);
     } catch (err) {
       // else set Error
@@ -46,6 +45,7 @@ const TestApiPage = () => {
     // setLoading false
     setIsLoading(false);
     // redirect to results => router.replace
+    router.push('/testing-results');
   };
 
   return (
