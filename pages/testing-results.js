@@ -3,6 +3,47 @@ import { TestingResultsContext } from '../context/TestingResultsContext';
 
 import ResultsTable from '../components/table/ResultsTable';
 
+const columns = [
+  {
+    Header: 'Test Results',
+    columns: [
+      {
+        Header: 'Route',
+        accessor: 'route',
+      },
+      {
+        Header: 'Operation',
+        accessor: 'operation',
+      },
+      {
+        Header: 'URL',
+        accessor: 'url',
+      },
+      {
+        Header: 'Test Type',
+        accessor: 'testType',
+      },
+      {
+        Header: 'Expected Status Code',
+        accessor: 'expectedStatusCode',
+      },
+      {
+        Header: 'Actual Status Code',
+        accessor: 'actualStatusCode',
+      },
+      {
+        Header: 'Status Text',
+        accessor: 'statusText',
+      },
+      {
+        Header: 'Mutation Applied',
+        accessor: 'mutationApplied',
+      },
+      { Header: 'Passed?', accessor: 'passed' },
+    ],
+  },
+];
+
 const alterDataResults = (dataResults) => {
   const newDataResults = [];
 
@@ -16,9 +57,11 @@ const alterDataResults = (dataResults) => {
           testType: op.testType,
           expectedStatusCode: op.expectedStatusCode,
           actualStatusCode: op.actualStatusCode,
-          statusTest: op.statusTest,
+          statusText: op.statusText,
           passed: op.passed.toString(),
-          mutationApplied: op.mutationApplied.map((ma) => ma.txt),
+          mutationApplied: op.mutationApplied.map(
+            (ma) => `${ma.inputName}: ${ma.txt},`
+          ),
         };
       })
     );
@@ -28,72 +71,20 @@ const alterDataResults = (dataResults) => {
 };
 
 const testingResultsPage = () => {
-  const [pageContent, setPageContent] = useState();
-
   const testingResultsCtx = useContext(TestingResultsContext);
   const isResultsNotEmtpy = !!testingResultsCtx.resultsData;
 
-  const setPageContentHandler = (content) => {
-    setPageContent(content);
-  };
-
-  useEffect(() => {
-    if (!isResultsNotEmtpy) {
-      setPageContentHandler(<h1> No Testing Results yet!! </h1>);
-      return;
-    }
-
-    const testResults = testingResultsCtx.resultsData.testResults;
-
-    const atlteredTestResults = alterDataResults(testResults);
-
-    const columns = [
-      {
-        Header: 'Test Results',
-        columns: [
-          {
-            Header: 'Route',
-            accessor: 'route',
-          },
-          {
-            Header: 'Operation',
-            accessor: 'operation',
-          },
-          {
-            Header: 'URL',
-            accessor: 'url',
-          },
-          {
-            Header: 'Test Type',
-            accessor: 'testType',
-          },
-          {
-            Header: 'Expected Status Code',
-            accessor: 'expectedStatusCode',
-          },
-          {
-            Header: 'Actual Status Code',
-            accessor: 'actualStatusCode',
-          },
-          {
-            Header: 'Status Text',
-            accessor: 'statusTest',
-          },
-          {
-            Header: 'Mutation Applied',
-            accessor: 'mutationApplied',
-          },
-          { Header: 'Passed?', accessor: 'passed' },
-        ],
-      },
-    ];
-
-    setPageContentHandler(
-      <ResultsTable columns={columns} data={atlteredTestResults} />
-    );
-  }, [testingResultsCtx.resultsData]);
-
-  return pageContent;
+  return (
+    <>
+      {isResultsNotEmtpy && (
+        <ResultsTable
+          columns={columns}
+          data={alterDataResults(testingResultsCtx.resultsData.testResults)}
+        />
+      )}
+      {!isResultsNotEmtpy && <h1> No Test Results yet!! </h1>}
+    </>
+  );
 };
 
 export default testingResultsPage;
