@@ -18,7 +18,17 @@ const ResultsTable = ({ columns, data }) => {
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              <th
+                style={{
+                  borderBottom: 'solid 3px red',
+                  color: 'black',
+                  fontFamily: 'sans-serif',
+                  fontSize: '1.1rem',
+                }}
+                {...column.getHeaderProps()}
+              >
+                {column.render('Header')}
+              </th>
             ))}
           </tr>
         ))}
@@ -29,7 +39,19 @@ const ResultsTable = ({ columns, data }) => {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                return (
+                  <td
+                    {...cell.getCellProps()}
+                    style={{
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      fontFamily: 'sans-serif',
+                      fontSize: '1.2rem',
+                    }}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                );
               })}
             </tr>
           );
