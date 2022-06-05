@@ -8,7 +8,9 @@ const testingStatisticsPage = () => {
 
   return (
     isResultsNotEmtpy && (
-      <FitnessChart chartValues={testingResultsCtx.resultsData.fitnessValues} />
+      <FitnessChart
+        chartValues={testingResultsCtx.resultsData.sumFitnessValues}
+      />
     )
   );
 };

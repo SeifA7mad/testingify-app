@@ -13,7 +13,7 @@ const ResultsTable = ({ columns, data }) => {
   });
 
   return (
-    <table {...getTableProps()}>
+    <table style={{ margin: '2rem auto' }} {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>

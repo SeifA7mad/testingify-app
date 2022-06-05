@@ -3,7 +3,7 @@ import { TestingResultsContext } from '../context/TestingResultsContext';
 
 import ResultsTable from '../components/table/ResultsTable';
 
-const columns = [
+const testingResultsColumns = [
   {
     Header: 'Test Results',
     columns: [
@@ -44,7 +44,23 @@ const columns = [
   },
 ];
 
-const alterDataResults = (dataResults) => {
+const fitnessResultsColumns = [
+  {
+    Header: 'Fitness Results',
+    columns: [
+      {
+        Header: 'Route',
+        accessor: 'route',
+      },
+      {
+        Header: 'Fitness Value',
+        accessor: 'fitnessValue',
+      },
+    ],
+  },
+];
+
+const alterDataTestResults = (dataResults) => {
   const newDataResults = [];
 
   for (const route in dataResults) {
@@ -70,6 +86,21 @@ const alterDataResults = (dataResults) => {
   return newDataResults;
 };
 
+const alterDataFitnessResults = (testResults, fitnessResults) => {
+  const newDataResults = [];
+
+  const routes = Object.keys(testResults);
+
+  for (let i = 0; i < routes.length; i++) {
+    newDataResults.push({
+      route: routes[i],
+      fitnessValue: fitnessResults[i],
+    });
+  }
+
+  return newDataResults;
+};
+
 const testingResultsPage = () => {
   const testingResultsCtx = useContext(TestingResultsContext);
   const isResultsNotEmtpy = !!testingResultsCtx.resultsData;
@@ -77,10 +108,21 @@ const testingResultsPage = () => {
   return (
     <>
       {isResultsNotEmtpy && (
-        <ResultsTable
-          columns={columns}
-          data={alterDataResults(testingResultsCtx.resultsData.testResults)}
-        />
+        <>
+          <ResultsTable
+            columns={testingResultsColumns}
+            data={alterDataTestResults(
+              testingResultsCtx.resultsData.testResults
+            )}
+          />
+          <ResultsTable
+            columns={fitnessResultsColumns}
+            data={alterDataFitnessResults(
+              testingResultsCtx.resultsData.testResults,
+              testingResultsCtx.resultsData.fitnessValues
+            )}
+          />
+        </>
       )}
       {!isResultsNotEmtpy && <h1> No Test Results yet!! </h1>}
     </>
