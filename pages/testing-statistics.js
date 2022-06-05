@@ -4,10 +4,10 @@ import FitnessChart from '../components/chart/FitnessChart';
 
 const testingStatisticsPage = () => {
   const testingResultsCtx = useContext(TestingResultsContext);
-  const isResultsEmtpy = !!testingResultsCtx.resultsData;
+  const isResultsNotEmtpy = !!testingResultsCtx.resultsData;
 
   return (
-    isResultsEmtpy && (
+    isResultsNotEmtpy && (
       <FitnessChart chartValues={testingResultsCtx.resultsData.fitnessValues} />
     )
   );

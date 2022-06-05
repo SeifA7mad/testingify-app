@@ -8,7 +8,7 @@ import classes from './MainNavigation.module.css';
 const MainNavigation = () => {
   const testingResultsCtx = useContext(TestingResultsContext);
 
-  const isResultsEmtpy = !!testingResultsCtx.resultsData;
+  const isResultsNotEmtpy = !!testingResultsCtx.resultsData;
 
   return (
     <header className={classes.header}>
@@ -21,7 +21,7 @@ const MainNavigation = () => {
           <li>
             <Link href='/test-api'> Test Your API </Link>
           </li>
-          {isResultsEmtpy && (
+          {isResultsNotEmtpy && (
             <>
               <li>
                 <Link href='/testing-results'> Results </Link>
