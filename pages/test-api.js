@@ -7,7 +7,6 @@ import Button from '../components/ui/Button';
 import UploadForm from '../components/upload-form/UploadForm';
 
 const TestApiPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const testingResultsCtx = useContext(TestingResultsContext);
@@ -20,7 +19,7 @@ const TestApiPage = () => {
 
   const postHttpFileHandler = async (formData) => {
     // setLoading = true
-    setIsLoading(true);
+    testingResultsCtx.setLoadingStatus(true);
     // fetch post request => http://localhost:3000/testapi
     // wait for response
     try {
@@ -44,7 +43,7 @@ const TestApiPage = () => {
     }
 
     // setLoading false
-    setIsLoading(false);
+    testingResultsCtx.setLoadingStatus(false);
     // redirect to results => router.replace
     if (!!error) router.push('/testing-results');
   };
@@ -57,7 +56,7 @@ const TestApiPage = () => {
           <Button onClick={() => setErrorHandler(null)}> Try Again!! </Button>
         </>
       )}
-      {isLoading && !error && (
+      {testingResultsCtx.testResultsIsLoading && !error && (
         <>
           <LoadingBoxSpinner />
           <h4 style={{ textAlign: 'center' }}>
@@ -66,7 +65,7 @@ const TestApiPage = () => {
           </h4>
         </>
       )}
-      {!isLoading && !error && (
+      {!testingResultsCtx.testResultsIsLoading && !error && (
         <UploadForm
           sendFileHandler={postHttpFileHandler}
           setError={setErrorHandler}
