@@ -24,6 +24,7 @@ const ResultsTable = ({ columns, data }) => {
                   color: 'black',
                   fontFamily: 'sans-serif',
                   fontSize: '1.1rem',
+                  maxWidth: '10rem'
                 }}
                 {...column.getHeaderProps()}
               >
@@ -47,6 +48,10 @@ const ResultsTable = ({ columns, data }) => {
                       border: 'solid 1px gray',
                       fontFamily: 'sans-serif',
                       fontSize: '1.2rem',
+                      overflowWrap: 'break-word',
+                      textAlign: 'center',
+                      minWidth: '6rem',
+                      maxWidth: '20rem'
                     }}
                   >
                     {cell.render('Cell')}
