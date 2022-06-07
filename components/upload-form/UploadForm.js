@@ -12,8 +12,6 @@ import Button from '../ui/Button';
 
 import classes from './UploadForm.module.css';
 
-const authKeys = [];
-
 const UploadForm = (props) => {
   const [authInputs, setAuthInputs] = useState([]);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
@@ -25,27 +23,17 @@ const UploadForm = (props) => {
   };
 
   const setKeyValueHandler = (value, id) => {
-    authKeys[id].keyValue = value;
+    authInputs[id].keyValue = value;
   };
 
   const setKeyNameHandler = (value, id) => {
-    authKeys[id].keyName = value;
+    authInputs[id].keyName = value;
   };
 
   const addNewAuthInputHandler = () => {
     const newAuthInputs = [...authInputs];
 
-    const authInput = (
-      <AuthInput
-        key={authInputs.length}
-        id={authInputs.length}
-        keyNameHandler={setKeyNameHandler}
-        keyValueHandler={setKeyValueHandler}
-      />
-    );
-
-    newAuthInputs.push(authInput);
-    authKeys.push({
+    newAuthInputs.push({
       keyName: '',
       keyValue: '',
     });
@@ -55,14 +43,11 @@ const UploadForm = (props) => {
   const removeAuthInputHandler = () => {
     const newAuthInputs = [...authInputs];
     newAuthInputs.splice(newAuthInputs.length - 1, 1);
-    authKeys.splice(authKeys.length - 1, 1);
     setAuthInputs(newAuthInputs);
   };
 
   const uploadFileHandler = (event) => {
     event.preventDefault();
-    const workingAuthKeys = [...authKeys];
-    authKeys = [];
     const files = fileUploadInputRef.current.files;
 
     if (!files[0]) {
@@ -73,7 +58,7 @@ const UploadForm = (props) => {
     const formData = new FormData();
     formData.append('oasFile', files[0]);
 
-    for (const key of workingAuthKeys) {
+    for (const key of authInputs) {
       if (key.keyName === '' || key.keyValue === '') {
         props.setError("Mustn't leave the form fields Empty!!");
         return;
@@ -83,6 +68,15 @@ const UploadForm = (props) => {
 
     props.sendFileHandler(formData);
   };
+
+  const inputContent = authInputs.map((_, index) => (
+    <AuthInput
+      key={index}
+      id={index}
+      keyNameHandler={setKeyNameHandler}
+      keyValueHandler={setKeyValueHandler}
+    />
+  ));
 
   return (
     <form className={classes.wrapper}>
@@ -112,7 +106,7 @@ const UploadForm = (props) => {
           onClick={removeAuthInputHandler}
         />
       </div>
-      <div className={classes.authInputs}>{authInputs}</div>
+      <div className={classes.authInputs}>{inputContent}</div>
       <Button onClick={uploadFileHandler}> Test API </Button>
     </form>
   );

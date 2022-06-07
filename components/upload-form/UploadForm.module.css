@@ -55,6 +55,8 @@
   width: 50px;
   cursor: pointer;
   background-image: linear-gradient(to bottom, #062138 50%, #ffffff 50%);
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .plusBtn:hover {
