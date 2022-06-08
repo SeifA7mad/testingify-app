@@ -86,10 +86,8 @@ const alterDataTestResults = (dataResults) => {
   return newDataResults;
 };
 
-const alterDataFitnessResults = (testResults, fitnessResults) => {
+const alterDataFitnessResults = (routes, fitnessResults) => {
   const newDataResults = [];
-
-  const routes = Object.keys(testResults);
 
   for (let i = 0; i < routes.length; i++) {
     newDataResults.push({
@@ -107,23 +105,22 @@ const testingResultsPage = () => {
 
   return (
     <>
-      {isResultsNotEmtpy && (
-        <>
-          <ResultsTable
-            columns={testingResultsColumns}
-            data={alterDataTestResults(
-              testingResultsCtx.resultsData.testResults
-            )}
-          />
-          <ResultsTable
-            columns={fitnessResultsColumns}
-            data={alterDataFitnessResults(
-              testingResultsCtx.resultsData.testResults,
-              testingResultsCtx.resultsData.fitnessValues
-            )}
-          />
-        </>
+      {isResultsNotEmtpy && testingResultsCtx.resultsData.testResults && (
+        <ResultsTable
+          columns={testingResultsColumns}
+          data={alterDataTestResults(testingResultsCtx.resultsData.testResults)}
+        />
       )}
+      {isResultsNotEmtpy && testingResultsCtx.resultsData.fitnessValues && (
+        <ResultsTable
+          columns={fitnessResultsColumns}
+          data={alterDataFitnessResults(
+            testingResultsCtx.resultsData.routes,
+            testingResultsCtx.resultsData.fitnessValues
+          )}
+        />
+      )}
+
       {!isResultsNotEmtpy && <h1> No Test Results yet!! </h1>}
     </>
   );

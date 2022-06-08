@@ -18,7 +18,9 @@ const calculateStandardDeviation = (values) => {
 
 const testingStatisticsPage = () => {
   const testingResultsCtx = useContext(TestingResultsContext);
-  const isResultsNotEmtpy = !!testingResultsCtx.resultsData;
+  const isResultsNotEmtpy =
+    !!testingResultsCtx.resultsData &&
+    testingResultsCtx.resultsData.sumFitnessValues;
 
   return (
     isResultsNotEmtpy && (
