@@ -1,5 +1,7 @@
 .navigationItem {
   margin-left: 3rem;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .navigationItem a {
@@ -15,6 +17,6 @@
 }
 
 .navigationItem .active {
-    text-decoration: underline;
-    color: white;
+  text-decoration: underline;
+  color: white;
 }
