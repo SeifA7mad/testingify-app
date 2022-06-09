@@ -2,21 +2,21 @@ import { useRef, useEffect, useContext } from 'react';
 
 import Chart from 'chart.js/auto';
 
-const FitnessChart = ({chartValues}) => {
-  const canvasEl = useRef(null);
+const colors = {
+  purple: {
+    default: 'rgba(149, 76, 233, 1)',
+    half: 'rgba(149, 76, 233, 0.5)',
+    quarter: 'rgba(149, 76, 233, 0.25)',
+    zero: 'rgba(149, 76, 233, 0)',
+  },
+  indigo: {
+    default: 'rgba(80, 102, 120, 1)',
+    quarter: 'rgba(80, 102, 120, 0.25)',
+  },
+};
 
-  const colors = {
-    purple: {
-      default: 'rgba(149, 76, 233, 1)',
-      half: 'rgba(149, 76, 233, 0.5)',
-      quarter: 'rgba(149, 76, 233, 0.25)',
-      zero: 'rgba(149, 76, 233, 0)',
-    },
-    indigo: {
-      default: 'rgba(80, 102, 120, 1)',
-      quarter: 'rgba(80, 102, 120, 0.25)',
-    },
-  };
+const FitnessChart = ({ chartValues }) => {
+  const canvasEl = useRef(null);
 
   useEffect(() => {
     const ctx = canvasEl.current.getContext('2d');
@@ -38,7 +38,7 @@ const FitnessChart = ({chartValues}) => {
       datasets: [
         {
           backgroundColor: gradient,
-          label: 'ABC Algorithm Fitness values',
+          label: 'DABC-HS Algorithm Fitness values',
           data: weight,
           fill: true,
           borderWidth: 2,
