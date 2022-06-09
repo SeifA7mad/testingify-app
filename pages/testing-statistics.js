@@ -27,6 +27,13 @@ const testingStatisticsPage = () => {
       <>
         <FitnessChart
           chartValues={testingResultsCtx.resultsData.sumFitnessValues}
+          title='DABC-HS Algorithm Fitness values'
+          color='purple'
+        />
+        <FitnessChart
+          chartValues={testingResultsCtx.resultsData.abcFitnessValues}
+          title='ABC Algorithm Fitness values'
+          color='indigo'
         />
         <Section title='Standard Deviation'>
           {calculateStandardDeviation(

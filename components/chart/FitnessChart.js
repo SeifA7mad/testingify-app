@@ -11,20 +11,22 @@ const colors = {
   },
   indigo: {
     default: 'rgba(80, 102, 120, 1)',
+    half: 'rgba(80, 102, 120, 0.5)',
     quarter: 'rgba(80, 102, 120, 0.25)',
+    zero: 'rgba(80, 102, 120, 0)',
   },
 };
 
-const FitnessChart = ({ chartValues }) => {
+const FitnessChart = ({ chartValues, title, color }) => {
   const canvasEl = useRef(null);
 
   useEffect(() => {
     const ctx = canvasEl.current.getContext('2d');
 
     const gradient = ctx.createLinearGradient(0, 16, 0, 600);
-    gradient.addColorStop(0, colors.purple.half);
-    gradient.addColorStop(0.65, colors.purple.quarter);
-    gradient.addColorStop(1, colors.purple.zero);
+    gradient.addColorStop(0, colors[color].half);
+    gradient.addColorStop(0.65, colors[color].quarter);
+    gradient.addColorStop(1, colors[color].zero);
 
     const weight = chartValues;
 
@@ -38,13 +40,13 @@ const FitnessChart = ({ chartValues }) => {
       datasets: [
         {
           backgroundColor: gradient,
-          label: 'DABC-HS Algorithm Fitness values',
+          label: title,
           data: weight,
           fill: true,
           borderWidth: 2,
-          borderColor: colors.purple.default,
+          borderColor: colors[color].default,
           lineTension: 0.2,
-          pointBackgroundColor: colors.purple.default,
+          pointBackgroundColor: colors[color].default,
           pointRadius: 3,
         },
       ],
