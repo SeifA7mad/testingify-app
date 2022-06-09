@@ -8,6 +8,7 @@ import UploadForm from '../components/upload-form/UploadForm';
 
 const TestApiPage = () => {
   const [error, setError] = useState(null);
+  const [executeTests, setExecuteTests] = useState(false);
 
   const testingResultsCtx = useContext(TestingResultsContext);
 
@@ -17,13 +18,18 @@ const TestApiPage = () => {
     setError(errorText);
   };
 
+  const setExecuteTestsHandler = () => {
+    setExecuteTests(!executeTests);
+  };
+
   const postHttpFileHandler = async (formData) => {
     // setLoading = true
     testingResultsCtx.setLoadingStatus(true);
     // fetch post request => http://localhost:3000/testapi
     // wait for response
+    const routeAPI = executeTests ? 'testapi-execute' : 'testapi';
     try {
-      const response = await fetch('http://localhost:3000/testapi', {
+      const response = await fetch(`http://localhost:3000/${routeAPI}`, {
         method: 'POST',
         body: formData,
       });
@@ -66,10 +72,13 @@ const TestApiPage = () => {
         </>
       )}
       {!testingResultsCtx.testResultsIsLoading && !error && (
-        <UploadForm
-          sendFileHandler={postHttpFileHandler}
-          setError={setErrorHandler}
-        />
+        <>
+          <UploadForm
+            sendFileHandler={postHttpFileHandler}
+            setError={setErrorHandler}
+          />
+          <Button class={executeTests} onClick={setExecuteTestsHandler}> Execute Tests? </Button>
+        </>
       )}
     </>
   );

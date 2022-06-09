@@ -13,7 +13,7 @@
   transition: all 250ms;
   overflow: hidden;
   cursor: pointer;
-  margin-top: 1.5rem;
+  margin: 1.5rem auto;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -40,3 +40,12 @@
 .btn:hover::before {
   width: 100%;
 }
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: rgba(183, 0, 0, 0.939);
+}
+
