@@ -31,7 +31,7 @@ const FitnessChart = ({ chartValues, title, color }) => {
     const weight = chartValues;
 
     const labels = [];
-    for (let i = 0; i < chartValues.length; i++) {
+    for (let i = 1; i <= chartValues.length; i++) {
       labels.push(i);
     }
 
