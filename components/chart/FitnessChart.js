@@ -1,37 +1,43 @@
-import { useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect } from 'react';
 
 import Chart from 'chart.js/auto';
 
 const colors = {
   purple: {
-    default: 'rgba(149, 76, 233, 1)',
-    half: 'rgba(149, 76, 233, 0.5)',
-    quarter: 'rgba(149, 76, 233, 0.25)',
-    zero: 'rgba(149, 76, 233, 0)',
+    default: 'rgb(0, 160, 0, 1)',
+    half: 'rgb(0, 160, 0, 0.5)',
+    quarter: 'rgb(0, 160, 0, 0.25)',
+    zero: 'rgb(0, 160, 0, 0)',
   },
   indigo: {
-    default: 'rgba(80, 102, 120, 1)',
-    half: 'rgba(80, 102, 120, 0.5)',
-    quarter: 'rgba(80, 102, 120, 0.25)',
-    zero: 'rgba(80, 102, 120, 0)',
+    default: 'rgb(8, 0, 255, 1)',
+    half: 'rgb(8, 0, 255, 0.5)',
+    quarter: 'rgb(8, 0, 255, 0.25)',
+    zero: 'rgb(8, 0, 255, 0)',
   },
 };
 
-const FitnessChart = ({ chartValues, title, color }) => {
+const FitnessChart = ({ DABCValues, ABCValues }) => {
   const canvasEl = useRef(null);
 
   useEffect(() => {
     const ctx = canvasEl.current.getContext('2d');
 
-    const gradient = ctx.createLinearGradient(0, 16, 0, 600);
-    gradient.addColorStop(0, colors[color].half);
-    gradient.addColorStop(0.65, colors[color].quarter);
-    gradient.addColorStop(1, colors[color].zero);
+    const DABCgradient = ctx.createLinearGradient(0, 16, 0, 600);
+    DABCgradient.addColorStop(0, colors['purple'].half);
+    DABCgradient.addColorStop(0.65, colors['purple'].quarter);
+    DABCgradient.addColorStop(1, colors['purple'].zero);
 
-    const weight = chartValues;
+    const ABCgradient = ctx.createLinearGradient(0, 16, 0, 600);
+    ABCgradient.addColorStop(0, colors['indigo'].half);
+    ABCgradient.addColorStop(0.65, colors['indigo'].quarter);
+    ABCgradient.addColorStop(1, colors['indigo'].zero);
+
+    const DABC_weight = DABCValues;
+    const ABC_weight = ABCValues;
 
     const labels = [];
-    for (let i = 1; i <= chartValues.length; i++) {
+    for (let i = 1; i <= DABC_weight.length; i++) {
       labels.push(i);
     }
 
@@ -39,15 +45,28 @@ const FitnessChart = ({ chartValues, title, color }) => {
       labels: labels,
       datasets: [
         {
-          backgroundColor: gradient,
-          label: title,
-          data: weight,
+          backgroundColor: DABCgradient,
+          label: 'DABC-HS',
+          data: DABC_weight,
+          fill: true,
+          borderWidth: 3,
+          borderColor: colors['purple'].default,
+          lineTension: 0.2,
+          pointBackgroundColor: colors['purple'].default,
+          pointRadius: 3,
+          pointStyle: 'circle',
+        },
+        {
+          backgroundColor: ABCgradient,
+          label: 'ABC',
+          data: ABC_weight,
           fill: true,
           borderWidth: 2,
-          borderColor: colors[color].default,
+          borderColor: colors['indigo'].default,
           lineTension: 0.2,
-          pointBackgroundColor: colors[color].default,
-          pointRadius: 3,
+          pointBackgroundColor: colors['indigo'].default,
+          pointRadius: 3.5,
+          pointStyle: 'rectRot',
         },
       ],
     };

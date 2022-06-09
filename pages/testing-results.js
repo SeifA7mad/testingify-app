@@ -43,20 +43,28 @@ const testingResultsColumns = [
     ],
   },
 ];
-
-const fitnessResultsColumns = [
+const columns = [
   {
-    Header: 'Fitness Results',
-    columns: [
-      {
-        Header: 'Route',
-        accessor: 'route',
-      },
-      {
-        Header: 'Fitness Value',
-        accessor: 'fitnessValue',
-      },
-    ],
+    Header: 'Route',
+    accessor: 'route',
+  },
+  {
+    Header: 'Fitness Value',
+    accessor: 'fitnessValue',
+  },
+];
+
+const DABC_fitnessResultsColumns = [
+  {
+    Header: 'DABC_HS Fitness Results',
+    columns: columns
+  },
+];
+
+const ABC_fitnessResultsColumns = [
+  {
+    Header: 'ABC Fitness Results',
+    columns: columns,
   },
 ];
 
@@ -111,14 +119,23 @@ const testingResultsPage = () => {
           data={alterDataTestResults(testingResultsCtx.resultsData.testResults)}
         />
       )}
-      {isResultsNotEmtpy && testingResultsCtx.resultsData.fitnessValues && (
-        <ResultsTable
-          columns={fitnessResultsColumns}
-          data={alterDataFitnessResults(
-            testingResultsCtx.resultsData.routes,
-            testingResultsCtx.resultsData.fitnessValues
-          )}
-        />
+      {isResultsNotEmtpy && testingResultsCtx.resultsData.DABC_fitnessValues && (
+        <div style={{display: 'flex'}}>
+          <ResultsTable
+            columns={DABC_fitnessResultsColumns}
+            data={alterDataFitnessResults(
+              testingResultsCtx.resultsData.routes,
+              testingResultsCtx.resultsData.DABC_fitnessValues
+            )}
+          />
+          <ResultsTable
+            columns={ABC_fitnessResultsColumns}
+            data={alterDataFitnessResults(
+              testingResultsCtx.resultsData.routes,
+              testingResultsCtx.resultsData.ABC_fitnessValues
+            )}
+          />
+        </div>
       )}
 
       {!isResultsNotEmtpy && <h1> No Test Results yet!! </h1>}

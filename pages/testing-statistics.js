@@ -20,24 +20,18 @@ const testingStatisticsPage = () => {
   const testingResultsCtx = useContext(TestingResultsContext);
   const isResultsNotEmtpy =
     !!testingResultsCtx.resultsData &&
-    testingResultsCtx.resultsData.sumFitnessValues;
+    testingResultsCtx.resultsData.DABC_sumFitnessValues;
 
   return (
     isResultsNotEmtpy && (
       <>
         <FitnessChart
-          chartValues={testingResultsCtx.resultsData.sumFitnessValues}
-          title='DABC-HS Algorithm Fitness values'
-          color='purple'
-        />
-        <FitnessChart
-          chartValues={testingResultsCtx.resultsData.abcFitnessValues}
-          title='ABC Algorithm Fitness values'
-          color='indigo'
+          DABCValues={testingResultsCtx.resultsData.DABC_sumFitnessValues}
+          ABCValues={testingResultsCtx.resultsData.ABC_sumFitnessValues}
         />
         <Section title='Standard Deviation'>
           {calculateStandardDeviation(
-            testingResultsCtx.resultsData.sumFitnessValues
+            testingResultsCtx.resultsData.DABC_sumFitnessValues
           )}
         </Section>
       </>
