@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { TestingResultsContext } from '../context/TestingResultsContext';
 
 import ResultsTable from '../components/table/ResultsTable';
@@ -9,63 +9,63 @@ const testingResultsColumns = [
     columns: [
       {
         Header: 'Route',
-        accessor: 'route',
+        accessor: 'route'
       },
       {
         Header: 'Operation',
-        accessor: 'operation',
+        accessor: 'operation'
       },
       {
         Header: 'URL',
-        accessor: 'url',
+        accessor: 'url'
       },
       {
         Header: 'Test Type',
-        accessor: 'testType',
+        accessor: 'testType'
       },
       {
         Header: 'Expected Status Code',
-        accessor: 'expectedStatusCode',
+        accessor: 'expectedStatusCode'
       },
       {
         Header: 'Actual Status Code',
-        accessor: 'actualStatusCode',
+        accessor: 'actualStatusCode'
       },
       {
         Header: 'Status Text',
-        accessor: 'statusText',
+        accessor: 'statusText'
       },
       {
         Header: 'Mutation Applied',
-        accessor: 'mutationApplied',
+        accessor: 'mutationApplied'
       },
-      { Header: 'Passed?', accessor: 'passed' },
-    ],
-  },
+      { Header: 'Passed?', accessor: 'passed' }
+    ]
+  }
 ];
 const columns = [
   {
     Header: 'Route',
-    accessor: 'route',
+    accessor: 'route'
   },
   {
     Header: 'Fitness Value',
-    accessor: 'fitnessValue',
-  },
+    accessor: 'fitnessValue'
+  }
 ];
 
 const DABC_fitnessResultsColumns = [
   {
     Header: 'DABC_HS Fitness Results',
     columns: columns
-  },
+  }
 ];
 
 const ABC_fitnessResultsColumns = [
   {
     Header: 'ABC Fitness Results',
-    columns: columns,
-  },
+    columns: columns
+  }
 ];
 
 const alterDataTestResults = (dataResults) => {
@@ -85,7 +85,7 @@ const alterDataTestResults = (dataResults) => {
           passed: op.passed.toString(),
           mutationApplied: op.mutationApplied.map(
             (ma) => `${ma.inputName}: ${ma.txt},`
-          ),
+          )
         };
       })
     );
@@ -100,16 +100,38 @@ const alterDataFitnessResults = (routes, fitnessResults) => {
   for (let i = 0; i < routes.length; i++) {
     newDataResults.push({
       route: routes[i],
-      fitnessValue: fitnessResults[i],
+      fitnessValue: fitnessResults[i]
     });
   }
 
   return newDataResults;
 };
 
-const testingResultsPage = () => {
+const extractNumberValues = (dataResults) => {
+  let numberOfFaults = 0;
+  let numberOfTests = 0;
+
+  if (!dataResults) return undefined;
+
+  for (const route in dataResults) {
+    numberOfFaults += dataResults[route].filter((op) => !op.passed).length;
+    numberOfTests += dataResults[route].length;
+  }
+
+  return {
+    numberOfFaults,
+    numberOfTests
+  };
+};
+
+const TestingResultsPage = () => {
   const testingResultsCtx = useContext(TestingResultsContext);
+
   const isResultsNotEmtpy = !!testingResultsCtx.resultsData;
+
+  const { numberOfFaults, numberOfTests } = extractNumberValues(
+    testingResultsCtx?.resultsData?.testResults || {}
+  );
 
   return (
     <>
@@ -119,23 +141,33 @@ const testingResultsPage = () => {
           data={alterDataTestResults(testingResultsCtx.resultsData.testResults)}
         />
       )}
-      {isResultsNotEmtpy && testingResultsCtx.resultsData.DABC_fitnessValues && (
-        <div style={{display: 'flex'}}>
-          <ResultsTable
-            columns={DABC_fitnessResultsColumns}
-            data={alterDataFitnessResults(
-              testingResultsCtx.resultsData.routes,
-              testingResultsCtx.resultsData.DABC_fitnessValues
-            )}
-          />
-          <ResultsTable
-            columns={ABC_fitnessResultsColumns}
-            data={alterDataFitnessResults(
-              testingResultsCtx.resultsData.routes,
-              testingResultsCtx.resultsData.ABC_fitnessValues
-            )}
-          />
-        </div>
+      {isResultsNotEmtpy &&
+        testingResultsCtx.resultsData.DABC_fitnessValues && (
+          <div style={{ display: 'flex' }}>
+            <ResultsTable
+              columns={DABC_fitnessResultsColumns}
+              data={alterDataFitnessResults(
+                testingResultsCtx.resultsData.routes,
+                testingResultsCtx.resultsData.DABC_fitnessValues
+              )}
+            />
+            <ResultsTable
+              columns={ABC_fitnessResultsColumns}
+              data={alterDataFitnessResults(
+                testingResultsCtx.resultsData.routes,
+                testingResultsCtx.resultsData.ABC_fitnessValues
+              )}
+            />
+          </div>
+        )}
+
+      {isResultsNotEmtpy && (
+        <h1>
+          {' '}
+          no. #Faults: {numberOfFaults}
+          <br />
+          no. #Tests: {numberOfTests}
+        </h1>
       )}
 
       {!isResultsNotEmtpy && <h1> No Test Results yet!! </h1>}
@@ -143,4 +175,4 @@ const testingResultsPage = () => {
   );
 };
 
-export default testingResultsPage;
+export default TestingResultsPage;

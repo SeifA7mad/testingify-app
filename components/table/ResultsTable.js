@@ -16,9 +16,10 @@ const ResultsTable = ({ columns, data }) => {
     <table style={{ margin: '2rem auto' }} {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <th
+              key={column.id}
                 style={{
                   borderBottom: 'solid 3px red',
                   color: 'black',
@@ -38,10 +39,11 @@ const ResultsTable = ({ columns, data }) => {
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr key={row.id} {...row.getRowProps()}>
               {row.cells.map((cell) => {
                 return (
                   <td
+                    key={cell.id}
                     {...cell.getCellProps()}
                     style={{
                       padding: '10px',
